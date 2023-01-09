@@ -15,6 +15,7 @@ jobs:
           command: |
             poetry run coverage run -m pytest --junit-xml test-results/junit.xml
             poetry run coverage report
+            poetry run coverage html
             poetry run coverage xml -i
       - store_artifacts:
           path: htmlcov
