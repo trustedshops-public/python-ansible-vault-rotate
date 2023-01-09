@@ -3,6 +3,9 @@ from argparse import ArgumentParser
 
 
 def run():
+    """
+    Entrypoint for CLI
+    """
     parser = ArgumentParser()
     parser.add_argument('--version', action='version', version=f'%(prog)s {__VERSION__}')
     args = parser.parse_args()

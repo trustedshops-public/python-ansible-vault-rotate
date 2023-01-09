@@ -5,12 +5,20 @@ ANSIBLE_VAULT_REGEX = re.compile(r'(^(\s*)\$ANSIBLE_VAULT;(\S*)\n(\s*\w+\n)*)', 
 
 
 class FindVaultStringResult(typing.TypedDict):
+    """
+    Representation for vaulted string occurence
+    """
     vaultedString: str
     label: typing.Union[str, None]
     indent: str
 
 
 def find_vault_strings(file_path: str) -> typing.Generator[FindVaultStringResult, None, None]:
+    """
+    Find all vaulted strings in a given file
+    :param file_path: Path to file to search for
+    :return: All occurrences of vaulted strings in the given file
+    """
     with open(file_path, "r") as f:
         content = "".join(f.readlines())
         for match in ANSIBLE_VAULT_REGEX.findall(content):
