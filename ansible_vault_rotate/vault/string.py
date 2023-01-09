@@ -1,10 +1,12 @@
+import typing
 from tempfile import NamedTemporaryFile
 from ansible.parsing.vault import VaultEditor, VaultLib, VaultSecret
 from ansible_vault_rotate.match import FindVaultStringResult
 from os import remove
+from .util import create_vault_lib, create_vault_secret
 
 
-def vault_string(vault_string_search_result: FindVaultStringResult, old_passphrase: str, new_passphrase: str):
+def vault_string(vault_string_search_result: FindVaultStringResult, old_passphrase: str, new_passphrase: str) -> str:
     """
     Rekey a given vault string search result by decrypting the passphrase and rekeying with new passphrase
 
@@ -28,14 +30,12 @@ def vault_string(vault_string_search_result: FindVaultStringResult, old_passphra
         raise IOError("Could not create temporary file for rekey")
 
     # rekey file
-    editor = VaultEditor(VaultLib([
-        (label if label is not None else "default", VaultSecret(old_passphrase.encode()))
-    ]))
-    editor.rekey_file(tempFile.name, VaultSecret(new_passphrase.encode()), label)
+    editor = VaultEditor(create_vault_lib(label, old_passphrase))
+    editor.rekey_file(tempFile.name, create_vault_secret(new_passphrase), label)
 
     # read content and add indentation again
     with open(f.name, "r") as f:
-        new_vault = indent + indent.join(f.readlines()).rstrip()
+        new_vault = indent + indent.join(f.readlines())
         content = vaulted_string.replace(vaulted_string, new_vault)
 
     # delete temp file and return ready to use string

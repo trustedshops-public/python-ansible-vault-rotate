@@ -7,8 +7,10 @@ class VaultStringTest(unittest.TestCase):
     def verify_indent(self, result, indent):
         lines = result.split("\n")
         for line in lines:
+            if line == "":
+                continue
             self.assertTrue(line.startswith(indent), "line '%s' is not indented" % line)
-        self.assertEqual(len(lines), 6)
+        self.assertEqual(len(lines), 7)
 
     def test_rekey_unlabeled(self):
         search_result = FindVaultStringResult(

@@ -25,7 +25,7 @@ def find_vault_strings(file_path: str) -> typing.Generator[FindVaultStringResult
             meta = match[2].split(";")
 
             yield FindVaultStringResult(
-                vaultedString=match[0].strip(),
+                vaultedString=match[0],
                 label=meta[2] if len(meta) == 3 else None,
                 indent=match[1]
             )
