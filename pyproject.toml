@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ansible-vault-rotate"
+version = "0.1.0"
+description = "Advanced Python CLI to rotate the secret used for ansible vault inline secrets and files in a project"
+authors = ["Timo Reymann <Timo.Reymann@trustedshops.de>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "ansible_vault_rotate"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.scripts]
+ansible-vault-rotate = 'ansible_vault_rotate.cli.run:run'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
