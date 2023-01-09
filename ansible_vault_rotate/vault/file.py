@@ -4,7 +4,14 @@ from .string import vault_string
 from ansible_vault_rotate.match import find_vault_strings
 
 
-def rekey_file(source: str, old_passphrase: str, new_passphrase: str, target: typing.Union[str, None] = None):
+def rekey_file(source: str, old_passphrase: str, new_passphrase: str, target: typing.Union[str, None] = None) -> None:
+    """
+    Rekey all ansible vault secrets in the given file
+    :param source: Path to source file
+    :param old_passphrase: Old passphrase to decrypt secrets
+    :param new_passphrase: New passphrase to encrypt secrets with
+    :param target: Target path, if not specified overwrites source path
+    """
     replacements = []
     for match in find_vault_strings(source):
         replacement = vault_string(match, old_passphrase, new_passphrase)

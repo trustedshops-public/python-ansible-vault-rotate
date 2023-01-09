@@ -14,7 +14,7 @@ def create_vault_lib(label: typing.Union[str, None], passphrase: str) -> VaultLi
     ])
 
 
-def load_with_vault(path: str, vault_label: str, passphrase: str):
+def load_with_vault(path: str, vault_label: str, passphrase: str) -> dict:
     loader = DataLoader()
     loader.set_vault_secrets(([(vault_label, create_vault_secret(passphrase))]))
     return loader.load_from_file(path)

@@ -2,7 +2,7 @@ from ansible_vault_rotate import __VERSION__
 from argparse import ArgumentParser
 
 
-def run():
+def run() -> None:
     """
     Entrypoint for CLI
     """
