@@ -24,7 +24,7 @@ jobs:
               echo "Building for snapshot, replacing version with unique one"
               last_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
               version="${last_tag}.dev${CIRCLE_BUILD_NUM}"
-              sed  -ri "s/version = \"(.*)\"/version = \"$version\"/" pyproject.toml > pyproject.toml
+              sed  -ri "s/version = \"(.*)\"/version = \"$version\"/" pyproject.toml
             fi
 
             poetry publish \
