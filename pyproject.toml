@@ -12,7 +12,7 @@ packages = [
     { include = "ansible_vault_rotate" }
 ]
 exclude = [
-    "**/test_*.py",
+    "**/*_test.py",
     "**/__testdata__/**"
 ]
 include = [
@@ -34,7 +34,7 @@ coverage = "^7.0.4"
 "Bug Tracker" = "https://github.com/trustedshops-public/python-ansible-vault-rotate/issues"
 
 [tool.coverage.run]
-omit = [".*", "*/site-packages/*", "test_*"]
+omit = [".*", "*/site-packages/*", "*_test"]
 
 [tool.coverage.report]
 fail_under = 70
