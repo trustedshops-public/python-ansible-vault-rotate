@@ -35,7 +35,7 @@ coverage = "^7.0.4"
 
 [[tool.poetry.source]]
 name = "testpypi"
-url = "https://test.pypi.org/simple/"
+url = "https://test.pypi.org/legacy/"
 default = false
 secondary = false
 
