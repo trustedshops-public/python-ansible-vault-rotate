@@ -47,16 +47,21 @@ workflows:
   continuous:
     jobs:
       - test
+      - approve_test_publish:
+          type: approval
+          requires:
+            - test
       - pip-publish:
           name: publish-testpypi
           repository: testpypi
           requires:
-            - test
+            - approve_test_publish
           filters:
             branches:
               only: main
           context:
             - pip-test
+
       - pip-publish:
           name: publish-pypi
           repository: pypi
