@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   python: circleci/python@2.1.1
   codecov: codecov/codecov@3.2.4
+  semantic-release: trustedshops-public/semantic-release@3.1.5
 
 jobs:
   pip-publish:
@@ -47,6 +48,7 @@ workflows:
     jobs:
       - test
       - pip-publish:
+          name: publish-testpypi
           repository: testpypi
           requires:
             - test
@@ -55,3 +57,27 @@ workflows:
               only: main
           context:
             - pip-test
+      - pip-publish:
+          name: publish-pypi
+          repository: pypi
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+          context:
+            - pip-live
+      - semantic-release/with-existing-config:
+          name: semantic-release
+          additional_packages: "@google/semantic-release-replace-plugin"
+          requires:
+            - test
+          context:
+            - github-release
+          filters:
+            branches:
+              only:
+                # - main
+                - disabled-for-now

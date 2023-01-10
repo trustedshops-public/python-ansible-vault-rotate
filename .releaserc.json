@@ -1,0 +1,63 @@
+{
+  "branches": [
+    "master",
+    "main"
+  ],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits"
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@google/semantic-release-replace-plugin",
+      {
+        "replacements": [
+          {
+            "files": [
+              "pyproject.toml"
+            ],
+            "from": "version = \"[0-9.]+\"",
+            "to": "version = \"${nextRelease.version}\"",
+            "results": [
+              {
+                "file": "pyproject.toml",
+                "hasChanged": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md",
+          "pyproject.toml"
+        ]
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "path": "semantic-release",
+        "name": "trustedshops-public/python-ansible-vault-rotate"
+      }
+    ]
+  ],
+  "tagFormat": "${version}"
+}
