@@ -33,7 +33,7 @@ def run() -> None:
                         type=str,
                         action="append",
                         help="Glob pattern to apply the rekey for.",
-                        default=["**/*.yml", "**/*.yaml"])
+                        default=[])
     parser.add_argument("--ignore-errors",
                         action="store_true",
                         help="Do not abort on processing individual files",
@@ -52,6 +52,9 @@ def run() -> None:
     file_glob_pattern = args.file_glob_pattern
     ignore_errors = args.ignore_errors
 
+    if len(file_glob_pattern) == 0:
+        file_glob_pattern = ["**/*.yml", "**/*.yaml"]
+
     error_count = 0
     rekeyed_files_count = 0
     rekey_secrets_count = 0
@@ -66,7 +69,7 @@ def run() -> None:
                 except Exception as e:
                     error_count += 1
                     if ignore_errors:
-                        logging.warn("Failed to rekey file %s: %s", file, e)
+                        logging.warning("Failed to rekey file %s: %s", file, e)
                     else:
                         logging.error("Failed to rekey file %s: %s", file, e)
                         sys.exit(1)

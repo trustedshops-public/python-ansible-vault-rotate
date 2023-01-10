@@ -13,7 +13,23 @@ Advanced Python CLI to rotate the secret used for ansible vault inline secrets a
 
 ## Usage
 
-> TBD
+### Rekey given vault secret with new secret specified on CLI
+
+```sh
+ansible-vault-rotate --old-vault-secret-source file://my-vault-password --new-vault-secret-source my-new-secret
+```
+
+## Rekey only specific files (e.g. when using multiple keys per stage)
+
+```sh
+ansible-vault-rotate --old-vault-secret-source file://my-vault-password-<stage> --new-vault-secret-source my-new-secret --file-glob-pattern group_vars/<stage>/*.yml
+```
+
+## Getting help about all args
+
+```sh
+ansible-vault-rotate --help
+```
 
 ## Development
 
