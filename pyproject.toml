@@ -11,6 +11,16 @@ repository = "https://github.com/trustedshops-public/python-ansible-vault-rotate
 packages = [
     { include = "ansible_vault_rotate" }
 ]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Environment :: Console",
+    "Environment :: MacOS X",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Framework :: Ansible"
+]
 exclude = [
     "**/*_test.py",
     "**/__testdata__/**"
