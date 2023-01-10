@@ -82,7 +82,7 @@ workflows:
           requires:
             - test
           context:
-            - github-release
+            - semantic-release
           filters:
             branches:
               only:
