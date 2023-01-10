@@ -5,6 +5,24 @@ orbs:
   codecov: codecov/codecov@3.2.4
 
 jobs:
+  pip-publish:
+    executor: python/default
+    parameters:
+      repository:
+        type: string
+        description: Name of the repository to publish to
+    steps:
+      - checkout
+      - python/install-packages:
+          pkg-manager: poetry
+      - run:
+          name: Publish package
+          command: |
+            poetry publish
+              --build \
+              --repository <<parameters.repository>> \
+              --username "$TWINE_USERNAME" \
+              --password "$TWINE_PASSWORD"
   test:
     executor: python/default
     steps:
@@ -28,3 +46,12 @@ workflows:
   continuous:
     jobs:
       - test
+      - pip-publish:
+          repository: testpypi
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+          context:
+            - pip-test
