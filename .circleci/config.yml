@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Publish package
           command: |
-            poetry publish
+            poetry publish \
               --build \
               --repository <<parameters.repository>> \
               --username "$TWINE_USERNAME" \
