@@ -19,6 +19,14 @@ jobs:
       - run:
           name: Publish package
           command: |
+            if [ -z "$CIRCLE_TAG" ]
+            then
+              echo "Building for snapshot, replacing version with unique one"
+              last_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+              version="${last_tag}.dev${CIRCLE_BUILD_NUM}"
+              sed  -r "s/version = \"(.*)\"/version = \"$version\"/" pyproject.toml > pyproject.toml
+            fi
+
             poetry publish \
               --build \
               --repository <<parameters.repository>> \
@@ -47,15 +55,11 @@ workflows:
   continuous:
     jobs:
       - test
-      - approve_test_publish:
-          type: approval
-          requires:
-            - test
       - pip-publish:
           name: publish-testpypi
           repository: testpypi
           requires:
-            - approve_test_publish
+            - test
           filters:
             branches:
               only: main
