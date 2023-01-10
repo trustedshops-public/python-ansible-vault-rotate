@@ -1,5 +1,7 @@
 import os
 import unittest
+from tempfile import NamedTemporaryFile
+
 from .vault_source import TextVaultSource, FileVaultSource, build_vault_source
 
 
@@ -14,6 +16,13 @@ class VaultSourceTest(unittest.TestCase):
     def test_file_source(self):
         file = FileVaultSource(f"file://{self.fixture_name('vault-password')}")
         self.assertEqual(file.read(), "test")
+
+        with NamedTemporaryFile("w") as f:
+            f.write("test")
+        file = FileVaultSource(f"file://{f.name}")
+        file.write("updated")
+        with open(f.name) as f:
+            self.assertEqual(f.read(), "updated")
 
     def test_build_text(self):
         source = build_vault_source("test")
