@@ -5,6 +5,9 @@ python-ansible-vault-rotate
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/trustedshops-public/python-ansible-vault-rotate/tree/main.svg?style=shield&circle-token=9c1ea1cc46c804b46f457772637c8481717b511a)](https://dl.circleci.com/status-badge/redirect/gh/trustedshops-public/python-ansible-vault-rotate/tree/main)
 [![PyPI version](https://badge.fury.io/py/ansible-vault-rotate.svg)](https://pypi.org/project/ansible-vault-rotate)
 [![codecov](https://codecov.io/gh/trustedshops-public/python-ansible-vault-rotate/branch/main/graph/badge.svg?token=6PJ1GJzIcB)](https://codecov.io/gh/trustedshops-public/python-ansible-vault-rotate)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_python-ansible-vault-rotate&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_python-ansible-vault-rotate)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_python-ansible-vault-rotate&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_python-ansible-vault-rotate)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=trustedshops-public_python-ansible-vault-rotate&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=trustedshops-public_python-ansible-vault-rotate)
 
 Advanced Python CLI to rotate the secret used for ansible vault inline secrets and files in a project
 
