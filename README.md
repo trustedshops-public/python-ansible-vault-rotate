@@ -12,6 +12,21 @@ Advanced Python CLI to rotate the secret used for ansible vault inline secrets a
 - Reencrypt vault files
 - Reencrypt inline vaulted secrets
 
+## Installation
+
+It is strongly recommended to use pipx instead of pip if possible:
+
+```sh
+pipx install ansible-vault-rotate
+```
+
+Otherwise you can also use plain pip, but be warned that this might
+collide with your ansible installation globally!
+
+```sh
+pip install ansible-vault-rotate
+```
+
 ## Usage
 
 ### Rekey given vault secret with new secret specified on CLI
