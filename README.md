@@ -36,13 +36,18 @@ pip install ansible-vault-rotate
 ### Rekey given vault secret with new secret specified on CLI
 
 ```sh
-ansible-vault-rotate --old-vault-secret-source file://my-vault-password --new-vault-secret-source my-new-secret
+ansible-vault-rotate --old-vault-secret-source file://my-vault-password \
+                     --new-vault-secret-source my-new-secret \
+                     --update-source-secret
 ```
 
 ## Rekey only specific files (e.g. when using multiple keys per stage)
 
 ```sh
-ansible-vault-rotate --old-vault-secret-source file://my-vault-password-<stage> --new-vault-secret-source my-new-secret --file-glob-pattern group_vars/<stage>/*.yml
+ansible-vault-rotate --old-vault-secret-source file://my-vault-password-<stage> \
+                     --new-vault-secret-source my-new-secret \
+                     --file-glob-pattern group_vars/<stage>/*.yml \
+                     --update-source-secret
 ```
 
 ## Getting help about all args
