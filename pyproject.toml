@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ansible-vault-rotate"
-version = "1.1.0"
+version = "1.1.1"
 description = "Advanced Python CLI to rotate the secret used for ansible vault inline secrets and files in a project"
 authors = [
     "Timo Reymann <Timo.Reymann@trustedshops.de>"

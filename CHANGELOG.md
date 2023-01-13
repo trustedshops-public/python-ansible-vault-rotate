@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.0...1.1.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* Fix test ([95ac651](https://github.com/trustedshops-public/python-ansible-vault-rotate/commit/95ac6510d7cbe54a3202bf8c5b2b22c4041f1ba2))
+
 ## [1.1.0](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.0.0...1.1.0) (2023-01-13)
 
 
