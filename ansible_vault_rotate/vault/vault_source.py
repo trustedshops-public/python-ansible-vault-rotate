@@ -24,7 +24,7 @@ class FileVaultSource(VaultSource):
     """
 
     def __open_file(self, mode: str):
-        open(self.source.replace("file://", ""), mode)
+        return open(self.source.replace("file://", ""), mode)
 
     def read(self) -> str:
         with self.__open_file("r") as f:
