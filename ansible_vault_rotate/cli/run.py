@@ -22,7 +22,7 @@ def run() -> None:
     try:
         config.parse_vaults()
     except Exception as e:
-        logging.error("Failed to load vault sources", e)
+        logging.error("Failed to load vault sources: %s", e)
         sys.exit(2)
 
     rotator = AnsibleVaultRotator(config)
