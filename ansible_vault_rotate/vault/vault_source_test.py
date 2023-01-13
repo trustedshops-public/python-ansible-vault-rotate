@@ -10,17 +10,17 @@ class VaultSourceTest(unittest.TestCase):
         return os.path.dirname(os.path.abspath(__file__)) + f"/__testdata__/{file_name}"
 
     def test_text_source(self):
-        text = TextVaultSource("text")
-        self.assertEqual(text.read(), "text")
+        text_vault = TextVaultSource("text")
+        self.assertEqual(text_vault.read(), "text")
 
     def test_file_source(self):
-        file = FileVaultSource(f"file://{self.fixture_name('vault-password')}")
-        self.assertEqual(file.read(), "test")
+        file_vault = FileVaultSource(f"file://{self.fixture_name('vault-password')}")
+        self.assertEqual(file_vault.read(), "test")
 
         with NamedTemporaryFile("w") as f:
             f.write("test")
-        file = FileVaultSource(f"file://{f.name}")
-        file.write("updated")
+        file_vault = FileVaultSource(f"file://{f.name}")
+        file_vault.write("updated")
         with open(f.name) as f:
             self.assertEqual(f.read(), "updated")
 

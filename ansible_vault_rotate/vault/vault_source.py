@@ -23,12 +23,15 @@ class FileVaultSource(VaultSource):
     Implementation of VaultSource to load secret from file
     """
 
+    def __open_file(self, mode: str):
+        open(self.source.replace("file://", ""), mode)
+
     def read(self) -> str:
-        with open(self.source.replace("file://", ""), "r") as f:
+        with self.__open_file("r") as f:
             return f.read().rstrip()
 
     def write(self, value: str) -> None:
-        with open(self.source.replace("file://", ""), "w") as f:
+        with self.__open_file("w") as f:
             f.write(value)
 
 

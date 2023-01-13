@@ -24,14 +24,14 @@ def vault_string(vault_string_search_result: FindVaultStringResult, old_passphra
     # write vaulted text to file
     with NamedTemporaryFile(mode='w', delete=False) as f:
         f.write(vaulted_string.replace(indent, ''))
-        tempFile = f
+        temp_file = f
 
-    if tempFile is None:
+    if temp_file is None:
         raise IOError("Could not create temporary file for rekey")
 
     # rekey file
     editor = VaultEditor(create_vault_lib(label, old_passphrase))
-    editor.rekey_file(tempFile.name, create_vault_secret(new_passphrase), label)
+    editor.rekey_file(temp_file.name, create_vault_secret(new_passphrase), label)
 
     # read content and add indentation again
     with open(f.name, "r") as f:
