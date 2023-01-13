@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.0.0...1.1.0) (2023-01-13)
+
+
+### Features
+
+* Add better error handling for loading vault sources ([c15c1f3](https://github.com/trustedshops-public/python-ansible-vault-rotate/commit/c15c1f30b0324173bc339139bd8882d0c93f26c5))
+
 ## 1.0.0 (2023-01-11)
 
 
