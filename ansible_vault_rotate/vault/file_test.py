@@ -19,7 +19,7 @@ class VaultFileTest(unittest.TestCase):
         f.seek(0)
 
     def test_single_secret(self):
-        with NamedTemporaryFile("r", delete=True) as f:
+        with NamedTemporaryFile("r", delete=False) as f:
             rekey_file(self.fixture_name("single-secret.yml"), "test", "test123", f.name)
 
             self.assertLineCount(f, 8)
@@ -29,7 +29,7 @@ class VaultFileTest(unittest.TestCase):
             self.assertEqual(doc['test'], 'test')
 
     def test_multiple_secret(self):
-        with NamedTemporaryFile("r", delete=True) as f:
+        with NamedTemporaryFile("r", delete=False) as f:
             rekey_file(self.fixture_name("multiple-secret.yml"), "test", "test123", f.name)
 
             self.assertLineCount(f, 17)
