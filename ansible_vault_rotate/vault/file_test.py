@@ -24,6 +24,7 @@ class VaultFileTest(unittest.TestCase):
 
             self.assertLineCount(f, 8)
 
+            os.chdir("/tmp") # work around for ansible path resolve issues
             doc = load_with_vault(f.name, "default", "test123")
             self.assertEqual(doc['regular_key'], "goes here")
             self.assertEqual(doc['test'], 'test')
@@ -34,6 +35,7 @@ class VaultFileTest(unittest.TestCase):
 
             self.assertLineCount(f, 17)
 
+            os.chdir("/tmp") # work around for ansible path resolve issues
             doc = load_with_vault(f.name, "default", "test123")
             self.assertEqual(doc['regular_key'], "goes here")
             self.assertEqual(doc['my_key']['a'], 'test')
