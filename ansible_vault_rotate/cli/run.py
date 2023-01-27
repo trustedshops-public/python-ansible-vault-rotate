@@ -2,9 +2,10 @@ import sys
 import logging
 
 from .logging import FormattingConsoleLogHandler
-from .cli_args import parse_args
+from .cli_args import parse_args, has_cli_args
 from .config import CliConfig
 from .rotator import AnsibleVaultRotator
+from .tui import prompt_tui
 
 
 def run() -> None:
@@ -12,11 +13,16 @@ def run() -> None:
     Entrypoint for CLI
     """
     logging.basicConfig(level=logging.INFO, handlers=[FormattingConsoleLogHandler()])
+    if has_cli_args():
+        args = parse_args()
+        args = args.__dict__
+    else:
+        args = prompt_tui()
+        print()
 
-    args = parse_args()
     logging.debug("Arguments provided: %s", args)
 
-    config = CliConfig(args.__dict__)
+    config = CliConfig(args)
     config.switch_to_pwd()
 
     try:
