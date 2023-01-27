@@ -1,4 +1,4 @@
-from InquirerPy import prompt
+from InquirerPy import prompt, get_style
 from InquirerPy.validator import PathValidator
 from os import getcwd
 
@@ -7,6 +7,19 @@ VAULT_TYPES = [
     "file",
 ]
 
+
+def validate_present(result):
+    return len(result) > 0
+
+
+def when_type(specifier, type):
+    def inner(result):
+        return result[f"{specifier}_vault.type"] == type
+
+    return inner
+
+
+validate_directory = PathValidator(is_dir=False, message="Input is not a file")
 questions = [
     {
         "type": "list",
@@ -18,16 +31,16 @@ questions = [
         "type": "input",
         "name": "old_vault.value",
         "message": "Old Vault Secret Source > Value (Text)",
-        "when": lambda result: result["old_vault.type"] == "plain text",
-        "validate": lambda result: len(result) > 0,
+        "when": when_type("old", "plain text"),
+        "validate": validate_present,
         "invalid_message": "Old vault passphrase needs to be set",
     },
     {
         "type": "filepath",
         "name": "old_vault.value",
         "message": "Old Vault Secret Source > Value (File)",
-        "when": lambda result: result["old_vault.type"] == "file",
-        "validate": PathValidator(is_dir=False, message="Input is not a file"),
+        "when": when_type("old", "file"),
+        "validate": validate_directory,
     },
     {
         "type": "list",
@@ -39,16 +52,16 @@ questions = [
         "type": "input",
         "name": "new_vault.value",
         "message": "Old Vault Secret Source > Value (Text)",
-        "when": lambda result: result["new_vault.type"] == "plain text",
-        "validate": lambda result: len(result) > 0,
+        "when": when_type("new", "plain text"),
+        "validate": validate_present,
         "invalid_message": "New vault passphrase needs to be set",
     },
     {
         "type": "filepath",
         "name": "new_vault.value",
         "message": "New Vault Secret Source > Value (File)",
-        "when": lambda result: result["new_vault.type"] == "file",
-        "validate": PathValidator(is_dir=False, message="Input is not a file"),
+        "when": when_type("new", "file"),
+        "validate": validate_directory,
     },
     {
         "type": "filepath",
@@ -59,7 +72,7 @@ questions = [
     {
         "type": "confirm",
         "name": "ignore_errors",
-        "message": "Should we abort when an error occurs processing individual files?",
+        "message": "Should we ignore when an error occurs processing individual files?",
     },
     {
         "type": "confirm",
@@ -75,7 +88,7 @@ def remap_vault_source(args, specifier):
     if args[f"{specifier}_vault.type"] == "file":
         prefix = "file://"
 
-    args[f"{specifier}_vault_secret_source"] = f"{prefix}.{args[f'{specifier}_vault.value']}"
+    args[f"{specifier}_vault_secret_source"] = f"{prefix}{args[f'{specifier}_vault.value']}"
 
     del args[f"{specifier}_vault.type"]
     del args[f'{specifier}_vault.value']
