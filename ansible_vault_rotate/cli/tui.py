@@ -2,21 +2,48 @@ from InquirerPy import prompt, get_style
 from InquirerPy.validator import PathValidator
 from os import getcwd
 
+VAULT_TYPE_FILE = "file"
+VAULT_TYPE_PLAIN_TEXT = "plain text"
 VAULT_TYPES = [
-    "plain text",
-    "file",
+    VAULT_TYPE_PLAIN_TEXT,
+    VAULT_TYPE_FILE,
 ]
 
 
-def validate_present(result):
-    return len(result) > 0
+def validate_present(value: str) -> bool:
+    """
+    Validate a given parameter is present
+    :param value: Value to check
+    """
+    return len(value) > 0
 
 
-def when_type(specifier, type):
+def when_type(specifier: str, type: str) -> callable:
+    """
+    Run the given input when the vault is of the given type
+    :param specifier: Specifier of vault (old, new)
+    :param type: Type of the vault source secret
+    """
     def inner(result):
         return result[f"{specifier}_vault.type"] == type
 
     return inner
+
+
+def remap_vault_source(args: dict[str], specifier: str) -> None:
+    """
+    Remap the vault source from interactive input
+    :param args: Arguments collected
+    :param specifier: Specifier of vault (old, new)
+    """
+    prefix = ""
+    if args[f"{specifier}_vault.type"] == "file":
+        prefix = "file://"
+
+    args[f"{specifier}_vault_secret_source"] = f"{prefix}{args[f'{specifier}_vault.value']}"
+
+    del args[f"{specifier}_vault.type"]
+    del args[f'{specifier}_vault.value']
 
 
 validate_directory = PathValidator(is_dir=False, message="Input is not a file")
@@ -31,7 +58,7 @@ questions = [
         "type": "input",
         "name": "old_vault.value",
         "message": "Old Vault Secret Source > Value (Text)",
-        "when": when_type("old", "plain text"),
+        "when": when_type("old", VAULT_TYPE_PLAIN_TEXT),
         "validate": validate_present,
         "invalid_message": "Old vault passphrase needs to be set",
     },
@@ -39,7 +66,7 @@ questions = [
         "type": "filepath",
         "name": "old_vault.value",
         "message": "Old Vault Secret Source > Value (File)",
-        "when": when_type("old", "file"),
+        "when": when_type("old", VAULT_TYPE_FILE),
         "validate": validate_directory,
     },
     {
@@ -52,7 +79,7 @@ questions = [
         "type": "input",
         "name": "new_vault.value",
         "message": "Old Vault Secret Source > Value (Text)",
-        "when": when_type("new", "plain text"),
+        "when": when_type("new", VAULT_TYPE_PLAIN_TEXT),
         "validate": validate_present,
         "invalid_message": "New vault passphrase needs to be set",
     },
@@ -78,23 +105,12 @@ questions = [
         "type": "confirm",
         "name": "update_source_secret",
         "message": "Should the source secret be updated?",
-        "when": lambda result: result["old_vault.type"] == "file",
+        "when": when_type("old", VAULT_TYPE_FILE),
     },
 ]
 
 
-def remap_vault_source(args, specifier):
-    prefix = ""
-    if args[f"{specifier}_vault.type"] == "file":
-        prefix = "file://"
-
-    args[f"{specifier}_vault_secret_source"] = f"{prefix}{args[f'{specifier}_vault.value']}"
-
-    del args[f"{specifier}_vault.type"]
-    del args[f'{specifier}_vault.value']
-
-
-def prompt_tui():
+def prompt_tui() -> dict[str]:
     args = prompt(questions)
     remap_vault_source(args, "old")
     remap_vault_source(args, "new")
