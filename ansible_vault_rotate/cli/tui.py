@@ -1,6 +1,8 @@
 from InquirerPy import prompt, get_style
 from InquirerPy.validator import PathValidator
 from os import getcwd
+from unittest.mock import patch
+
 
 VAULT_TYPE_FILE = "file"
 VAULT_TYPE_PLAIN_TEXT = "plain text"

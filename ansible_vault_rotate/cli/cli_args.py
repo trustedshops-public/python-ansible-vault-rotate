@@ -1,6 +1,6 @@
 from argparse import ArgumentParser, Namespace
 from os import getcwd
-from sys import argv
+import sys
 
 from ansible_vault_rotate import __VERSION__
 
@@ -37,7 +37,7 @@ parser.add_argument("--update-source-secret",
 
 
 def has_cli_args():
-    return len(argv) != 1
+    return len(sys.argv) != 1
 
 
 def parse_args() -> Namespace:
