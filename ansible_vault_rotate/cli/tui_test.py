@@ -19,7 +19,7 @@ class TuiTest(unittest.TestCase):
     def test_remap_vault_source(self):
         args = {
             "old_vault.type": "file",
-            "old_vault.value": "vault.txt"
+            "old_vault.value.file": "vault.txt"
         }
         remap_vault_source(args, "old")
         print(args)
