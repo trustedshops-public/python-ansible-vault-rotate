@@ -16,8 +16,10 @@ def run() -> None:
     if has_cli_args():
         args = parse_args()
         args = args.__dict__
+        is_interactive = False
     else:
         args = prompt_tui()
+        is_interactive = True
         print()
 
     logging.debug("Arguments provided: %s", args)
@@ -45,3 +47,8 @@ def run() -> None:
     if config.update_source_secret:
         logging.info("Try to update source secret")
         config.source_vault.write(config.target_vault_passphrase)
+
+    if is_interactive:
+        print("")
+        print("\033[1mThe options you chose resulted in the following CLI call. You can use that for automation as well.\033[0m")
+        print(f"  \033[3m{config.to_cli_call_string()}\033[0m")

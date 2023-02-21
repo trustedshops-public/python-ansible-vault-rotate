@@ -39,13 +39,13 @@ def remap_vault_source(args: dict[str], specifier: str) -> None:
     :param specifier: Specifier of vault (old, new)
     """
     prefix = ""
-    if args[f"{specifier}_vault.type"] == "file":
+    vault_type = args[f"{specifier}_vault.type"]
+    normalized_vault_type = vault_type.replace(" ","_")
+
+    if vault_type == "file":
         prefix = "file://"
 
-    args[f"{specifier}_vault_secret_source"] = f"{prefix}{args[f'{specifier}_vault.value']}"
-
-    del args[f"{specifier}_vault.type"]
-    del args[f'{specifier}_vault.value']
+    args[f"{specifier}_vault_secret_source"] = f"{prefix}{args[f'{specifier}_vault.value.{normalized_vault_type}']}"
 
 
 validate_directory = PathValidator(is_dir=False, message="Input is not a file")
@@ -58,7 +58,7 @@ questions = [
     },
     {
         "type": "input",
-        "name": "old_vault.value",
+        "name": "old_vault.value.plain_text",
         "message": "Old Vault Secret Source > Value (Text)",
         "when": when_type("old", VAULT_TYPE_PLAIN_TEXT),
         "validate": validate_present,
@@ -66,7 +66,7 @@ questions = [
     },
     {
         "type": "filepath",
-        "name": "old_vault.value",
+        "name": "old_vault.value.file",
         "message": "Old Vault Secret Source > Value (File)",
         "when": when_type("old", VAULT_TYPE_FILE),
         "validate": validate_directory,
@@ -79,7 +79,7 @@ questions = [
     },
     {
         "type": "input",
-        "name": "new_vault.value",
+        "name": "new_vault.value.plain_text",
         "message": "Old Vault Secret Source > Value (Text)",
         "when": when_type("new", VAULT_TYPE_PLAIN_TEXT),
         "validate": validate_present,
@@ -87,7 +87,7 @@ questions = [
     },
     {
         "type": "filepath",
-        "name": "new_vault.value",
+        "name": "new_vault.value.file",
         "message": "New Vault Secret Source > Value (File)",
         "when": when_type("new", "file"),
         "validate": validate_directory,
