@@ -1,7 +1,7 @@
 import re
 import typing
 
-ANSIBLE_VAULT_REGEX = re.compile(r'(^(\s*)\$ANSIBLE_VAULT;(\S*)\n(\s*\w+\n)*)', re.MULTILINE)
+ANSIBLE_VAULT_REGEX = re.compile(r'(^(\s*)\$ANSIBLE_VAULT;(\S*)\n(\s*\w+$)*)', re.MULTILINE)
 
 
 class FindVaultStringResult(typing.TypedDict):
