@@ -29,6 +29,16 @@ class VaultFileTest(unittest.TestCase):
             self.assertEqual(doc['regular_key'], "goes here")
             self.assertEqual(doc['test'], 'test')
 
+    def test_single_secret_eof(self):
+        with NamedTemporaryFile("r", delete=False) as f:
+            rekey_file(self.fixture_name("single-secret-eof.yml"), "test", "test123", f.name)
+
+            self.assertLineCount(f, 7)
+
+            os.chdir("/tmp") # work around for ansible path resolve issues
+            doc = load_with_vault(f.name, "default", "test123")
+            self.assertEqual(doc['test'], 'test')
+
     def test_multiple_secret(self):
         with NamedTemporaryFile("r", delete=False) as f:
             rekey_file(self.fixture_name("multiple-secret.yml"), "test", "test123", f.name)
