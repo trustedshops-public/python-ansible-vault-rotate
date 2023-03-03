@@ -22,18 +22,28 @@ class VaultFileTest(unittest.TestCase):
         with NamedTemporaryFile("r", delete=False) as f:
             rekey_file(self.fixture_name("single-secret.yml"), "test", "test123", f.name)
 
-            self.assertLineCount(f, 8)
+            self.assertLineCount(f, 9)
 
             os.chdir("/tmp") # work around for ansible path resolve issues
             doc = load_with_vault(f.name, "default", "test123")
             self.assertEqual(doc['regular_key'], "goes here")
             self.assertEqual(doc['test'], 'test')
 
+    def test_single_secret_eof(self):
+        with NamedTemporaryFile("r", delete=False) as f:
+            rekey_file(self.fixture_name("single-secret-eof.yml"), "test", "test123", f.name)
+
+            self.assertLineCount(f, 7)
+
+            os.chdir("/tmp") # work around for ansible path resolve issues
+            doc = load_with_vault(f.name, "default", "test123")
+            self.assertEqual(doc['test'], 'test')
+
     def test_multiple_secret(self):
         with NamedTemporaryFile("r", delete=False) as f:
             rekey_file(self.fixture_name("multiple-secret.yml"), "test", "test123", f.name)
 
-            self.assertLineCount(f, 17)
+            self.assertLineCount(f, 19)
 
             os.chdir("/tmp") # work around for ansible path resolve issues
             doc = load_with_vault(f.name, "default", "test123")
@@ -45,7 +55,7 @@ class VaultFileTest(unittest.TestCase):
         with NamedTemporaryFile("r", delete=True) as f:
             rekey_file(self.fixture_name("vaulted-file.txt"), "test", "test123", f.name)
 
-            self.assertLineCount(f, 6)
+            self.assertLineCount(f, 7)
 
             editor = VaultEditor(create_vault_lib("default", "test123"))
             content = editor.plaintext(f.name).decode("utf8")
