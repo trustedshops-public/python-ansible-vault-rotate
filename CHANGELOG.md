@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.1...1.1.2) (2023-03-23)
+
+
+### Bug Fixes
+
+* rekey of encrypted values at the end of the file ([277fb02](https://github.com/trustedshops-public/python-ansible-vault-rotate/commit/277fb025f508aeb6aacd2fc6d1f96b3c89b799ff))
+
 ## [1.1.1](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.0...1.1.1) (2023-01-13)
 
 
