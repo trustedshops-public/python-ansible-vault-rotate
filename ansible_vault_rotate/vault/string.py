@@ -35,7 +35,7 @@ def vault_string(vault_string_search_result: FindVaultStringResult, old_passphra
 
     # read content and add indentation again
     with open(f.name, "r") as f:
-        new_vault = indent + indent.join(f.readlines())
+        new_vault = indent + indent.join(f.readlines()).rstrip()
         content = vaulted_string.replace(vaulted_string, new_vault)
 
     # delete temp file and return ready to use string
