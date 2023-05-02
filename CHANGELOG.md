@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.2...2.0.0) (2023-05-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Add interactive TUI (#2)
+
+### Features
+
+* Add interactive TUI ([#2](https://github.com/trustedshops-public/python-ansible-vault-rotate/issues/2)) ([07466b3](https://github.com/trustedshops-public/python-ansible-vault-rotate/commit/07466b3dd2a5317fdfa8e05a3613e84deb44b5c7))
+
 ## [1.1.2](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.1...1.1.2) (2023-03-23)
 
 
