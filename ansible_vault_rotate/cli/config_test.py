@@ -26,3 +26,5 @@ class ConfigTest(unittest.TestCase):
 
         self.assertEqual(config.source_vault_passphrase, "old-secret")
         self.assertEqual(config.target_vault_passphrase, "new-secret")
+
+        self.assertFalse(config.has_custom_pwd())
