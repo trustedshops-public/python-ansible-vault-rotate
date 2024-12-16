@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@3.0.0
-  codecov: codecov/codecov@3.3.0
+  codecov: codecov/codecov@5.0.3
   semantic-release: trustedshops-public/semantic-release@6.0.0
 
 jobs:
