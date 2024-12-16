@@ -44,6 +44,11 @@ coverage = "^7.0.4"
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/trustedshops-public/python-ansible-vault-rotate/issues"
 
+[[tool.poetry.source]]
+name = "testpypi"
+url = "https://test.pypi.org/legacy/"
+priority = "supplemental"
+
 [tool.coverage.run]
 omit = [".*", "*/site-packages/*", "*_test"]
 
