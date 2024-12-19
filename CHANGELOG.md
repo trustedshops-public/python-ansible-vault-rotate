@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/2.0.0...2.1.0) (2024-12-19)
+
+
+### Features
+
+* allow rekey when multiple vaults are used within one file ([db26807](https://github.com/trustedshops-public/python-ansible-vault-rotate/commit/db2680790e247e97b7f55100513fe1611697039f))
+
 ## [2.0.0](https://github.com/trustedshops-public/python-ansible-vault-rotate/compare/1.1.2...2.0.0) (2023-05-02)
 
 
