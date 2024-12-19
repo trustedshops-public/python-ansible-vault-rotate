@@ -3,8 +3,10 @@ import unittest
 from tempfile import NamedTemporaryFile
 
 from ansible.parsing.vault import VaultEditor
+from ansible.parsing.dataloader import DataLoader
 
 from ansible_vault_rotate.vault import load_with_vault
+from ansible_vault_rotate.vault.util import create_vault_secret
 from .file import rekey_file
 from .util import create_vault_lib
 
@@ -60,3 +62,20 @@ class VaultFileTest(unittest.TestCase):
             editor = VaultEditor(create_vault_lib("default", "test123"))
             content = editor.plaintext(f.name).decode("utf8")
             self.assertEqual(content, "i am\na multiline\nstring\n")
+
+    def test_multiple_vault(self):
+        with NamedTemporaryFile("r", delete=True) as f:
+            rekey_file(self.fixture_name("multiple-vault.yml"), "testprod", "testprod123", f.name)
+
+            self.assertLineCount(f, 17)
+            os.chdir("/tmp") # work around for ansible path resolve issues
+
+            loader = DataLoader()
+            loader.set_vault_secrets(([
+                ("dev", create_vault_secret("test")),
+                ("prod", create_vault_secret("testprod123")),
+            ]))
+            doc = loader.load_from_file(f.name)
+            self.assertEqual(doc['regular_key'], "goes here")
+            self.assertEqual(doc['my_key']['a'], 'test')
+            self.assertEqual(doc['my_key']['b'], 'abc')
